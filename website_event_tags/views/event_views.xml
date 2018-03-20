@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+    <!-- Event Ticket Tags -->
+    <record id="event_tag_view_tree" model="ir.ui.view">
+        <field name="name">event.ticket.tags.tree</field>
+        <field name="model">event.ticket.tag</field>
+        <field name="arch" type="xml">
+            <tree editable="top" string="Tag">
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="event_tag_action" model="ir.actions.act_window">
+        <field name="name">Ticket Tags</field>
+        <field name="res_model">event.ticket.tag</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to create a new ticket tag.
+          </p><p>
+            Tags allows to organize tickets.
+          </p>
+        </field>
+    </record>
+
+    <menuitem name="Event Tags" id="menu_event_ticket_tag" action="event_tag_action" parent="event.menu_event_configuration" groups="base.group_no_one" sequence="10"/>
+
+
+    <record id="view_event_form_inherit_ticket_tag" model="ir.ui.view">
+        <field name="name">event.event.form.inherit.tag</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="event_sale.view_event_form_inherit_ticket"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='event_ticket_ids']/tree/field[@name='product_id']" position="after">
+                    <field name="tag_ids" widget="many2many_tags"/>
+                    <field name="color"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    <record id="view_event_form_inherit_event_url" model="ir.ui.view">
+        <field name="name">event.event.form.inherit.url</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="website_event.view_event_sale_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <field name="twitter_hashtag" position="after">
+                    <field name="official_url" widget="url"/>
+                    <field name="is_tags_enable" />
+                </field>
+            </data>
+        </field>
+    </record>
+
+    <record id="event_ticket_form_view_inherit_ticket_tag" model="ir.ui.view">
+        <field name="name">event.event.ticket.form.inherit.tag</field>
+        <field name="model">event.event.ticket</field>
+        <field name="inherit_id" ref="event_sale.event_ticket_form_view"/>
+        <field name="arch" type="xml">
+            <field name="price_reduce" position="after">
+                <field name="tag_ids" widget="many2many_tags"/>
+            </field>
+            <field name="is_expired" position="after">
+                <field name="color"/>
+            </field>
+        </field>
+    </record>
+
+    </data>
+</odoo>

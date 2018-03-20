@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="assets" inherit_id="point_of_sale.assets">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/event_pos/static/src/js/screens.js" />
+                <script type="text/javascript" src="/event_pos/static/src/js/models.js" />
+
+	            <link rel="stylesheet" href="/event_pos/static/src/css/attendees_popup.css" id="pos-stylesheet"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

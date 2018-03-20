@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Snippet's Title -->
+    <template id="s_events" name="Upcoming Events">
+        <section class="s_events">
+            <div class="container">
+                <h2 class="text-center">Upcoming Events</h2>
+                <div class="js_get_events" data-loading="true" data-template="website_event_snippet.media_list_template"/>
+                <hr/>
+            </div>
+        </section>
+    </template>
+</odoo>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <template id="s_events_place_in_tab" inherit_id="website.snippets">
+      <xpath expr="//div[@id='snippet_feature']/div[contains(@class, 'o_panel_body')]/t" position="before">
+        <t t-snippet="website_event_snippet.s_events" t-thumbnail="/website_event_snippet/static/src/img/s_events.png"/>
+      </xpath>
+    </template>
+
+    <!-- Snippet's Options -->
+    <template id="s_events_option" inherit_id="website.snippet_options">
+      <xpath expr="//div[@data-js='background']" position="before">
+        <div data-js='js_get_events_limit' data-selector=".js_get_events">
+          <li class="dropdown-submenu">
+            <a tabindex="-1" href="#">Limit number to...</a>
+            <ul class="dropdown-menu">
+              <li data-events_limit="1"><a>1 Event</a></li>
+              <li data-events_limit="2"><a>2 Events</a></li>
+              <li data-events_limit="3"><a>3 Events</a></li>
+              <li data-events_limit="4"><a>4 Events</a></li>
+              <li data-events_limit="5"><a>5 Events</a></li>
+              <li data-events_limit="6"><a>6 Events</a></li>
+              <li data-events_limit="7"><a>7 Events</a></li>
+              <li data-events_limit="8"><a>8 Events</a></li>
+              <li data-events_limit="9"><a>9 Events</a></li>
+              <li data-events_limit="10"><a>10 Events</a></li>
+            </ul>
+          </li>
+        </div>
+      </xpath>
+
+      <xpath expr="//div[@data-js='background']" position="before">
+        <div data-js='js_get_events' data-selector=".js_get_events"/>
+        <div data-js='js_get_events_cover' data-selector=".js_get_events">
+          <li class="dropdown-submenu">
+            <a tabindex="-1" href="#">Event Cover Image...</a>
+            <ul class="dropdown-menu">
+              <li data-events_cover="1"><a>Enable</a></li>
+              <li data-events_cover="0"><a>Disable</a></li>
+            </ul>
+          </li>
+        </div>
+      </xpath>
+    </template>
+
+</data>
+</openerp>

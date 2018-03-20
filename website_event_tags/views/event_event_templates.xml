@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="event_sale.event_registration_report_template_badge" inherit_id="event.event_registration_report_template_badge">
+        <xpath expr="//div[@id='o_event_name']" position="inside">
+            <div t-if="o.event_ticket_id" class="col-xs-12 text-center" style="padding:0px;">
+                <div t-attf-style="background: #{o.event_ticket_id.color or 'lightgrey'}; height: 65px;" class="mt16 text-center">
+                    <h3><span t-field="o.event_ticket_id"/></h3>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="website_event_hidde_register" inherit_id="website_event.layout">
+        <xpath expr="//ol[@id='event_menu']" position="replace">
+            <ol name="Event Menu" class="breadcrumb mb0" id="event_menu" t-if="event.menu_id" t-att-data-content_menu_id="editable and event.menu_id.id">
+                <t t-foreach="event.menu_id.child_id" t-as="submenu">
+                    <t t-if="event.is_tags_enable">
+                        <t t-if="submenu.name != 'Register'">
+                            <t t-call="website.submenu" />
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <t t-call="website.submenu" />
+                    </t>
+                </t>
+            </ol>
+        </xpath>
+    </template>
+
+    <template id="website_event_order_condition" inherit_id="website_event.registration_template">
+        <xpath expr="//button[@type='submit']" position="replace">
+            <t t-if="not request.env.user.has_group('base.group_public')">
+                    <t t-if="website.sale_get_order().is_uniq_event(event) == True">
+                        <button type="submit" t-if="event.state == 'confirm' and (event.seats_available or event.seats_availability == 'unlimited')" class="btn btn-primary btn-lg pull-right a-submit" t-attf-id="#{event.id}">Order Now</button>
+                    </t>
+                    <t t-else="">
+                        <a class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#noRegistration">Order Now</a>
+                    </t>
+                </t>
+                <t t-else="">
+                    <a class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#noLogin">Order Now</a>
+                </t>
+
+                <!-- Avaiod Multiple Events Wizard -->
+                <div id="noRegistration" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                                <h4 class="modal-title"><strong>Warning!</strong></h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="alert alert-danger">
+                                    <center>
+                                        You cannot register for an other event before remove your previous cart or finish it and pay it.
+                                        <hr/>
+                                        <button class="btn btn-danger o_event_empty_cart">EMPTY CART</button>
+                                        <a href="/shop/checkout" class="btn btn-primary">CONTINUE AND PAY IT</a>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Options for not login User -->
+                <div id="noLogin" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                                <h4 class="modal-title"><strong>Checkout</strong></h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="alert alert-primary">
+                                    <center>
+                                        <a class="btn btn-lg btn-primary" t-attf-href="/web/login?redirect=#{request.httprequest.url}">Creat an Account</a>
+                                         Or 
+                                        <t t-if="website.sale_get_order().is_uniq_event(event) == True">
+                                            <button type="submit" t-if="event.state == 'confirm' and (event.seats_available or event.seats_availability == 'unlimited')" class="btn btn-primary btn-lg a-submit" t-attf-id="#{event.id}">Without Login</button>
+                                        </t>
+                                        <t t-else="">
+                                            <a class="btn btn-primary btn-lg noRegistration" data-toggle="modal" data-target="#noRegistration">Without Login</a>
+                                        </t>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </xpath>
+    </template>
+</odoo>

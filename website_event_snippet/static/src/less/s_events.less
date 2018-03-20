@@ -1,0 +1,79 @@
+
+.s_events .media_list_template {
+    margin:10px 10px;
+    display: inline-block;
+    flex-grow: 1;
+    max-width: 265px;
+    .fa {
+        color: @odoo-brand-optional;
+    }
+    .text-highlight {
+        color: @odoo-brand-optional;
+    }
+    .badge {
+        background-color: @odoo-brand-optional;
+    }
+    .media-body {
+        color: white;
+        background-color: #1D202A;
+        padding: 10px 10px;
+    }
+    .top_cover_image {
+        position: relative;
+        .notify-badge{
+            letter-spacing: 1px;
+            position: absolute;
+            left: -5px;
+            top: 10px;
+            background: darken(@odoo-brand-optional, 5%);
+            text-align: center;
+            color:white;
+            padding: 10px 15px;
+            font-size: 15px;
+            box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+            b {
+                font-size: smaller;
+            }
+        }
+    }
+    .info_block {
+        margin-top: 30px;
+        font-size: small;
+    }
+    .date_info {
+        margin-bottom: 10px; 
+    }
+    .cut_line {
+        position: relative;
+        display: block;
+        height: 1px;
+        border-top: 1px dashed #656565;
+        margin: 10px -15px;
+    }
+    .cut_line:before, .cut_line:after { 
+        position:absolute; 
+        bottom:-5px;
+        left:0; 
+        height:10px; 
+        width:10px; 
+        background:white;
+        content:"";
+        border-radius:5px;
+    }
+    .cut_line:after {
+      right:0; left:auto;
+    }
+    .sold_out {
+        letter-spacing: 2px;
+        color: #C44042;
+        padding: 16px 14px;
+    }
+    .o_register_btn {
+        border-radius: 21px;
+        background-color: transparent;
+        margin: 5px 0px;
+        border-color: @odoo-brand-optional;
+        padding: 10px 14px;
+        letter-spacing: 2px;
+    }
+}

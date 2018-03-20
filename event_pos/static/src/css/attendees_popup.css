@@ -1,0 +1,31 @@
+.pos .modal-dialog .event_attendees_popup {
+    width: 800px;
+    overflow-x: auto;
+}
+.event_attendees_popup .row {
+	margin-bottom: 4px;
+}
+.event_attendees_popup .col-md-3 {
+	display: inline-block;
+	max-width: 250px;
+}
+.event_attendees_popup .col-md-4 {
+	display: inline-block;
+	max-width: 330px;
+}
+.event_attendees_popup .col-md-5 {
+	display: inline-block;
+	max-width: 415px;
+}
+.event_attendees_popup .event .event-title {
+	margin: 5px 0px;
+}
+.event_attendees_popup .event {
+	margin-bottom: 30px;
+}
+.event_attendees_popup .danger {
+	color: #F44336;
+}
+.pos .event_attendees_popup .footer  {
+	position: initial;
+}

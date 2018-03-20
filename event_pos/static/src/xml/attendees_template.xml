@@ -1,0 +1,113 @@
+<templates id="template" inherit_id="point_of_sale.template">
+    <t t-name="AttendeesDetailPopup">
+        <div class="modal-dialog modal-lg">
+            <div class="popup event_attendees_popup">
+                <p class="title">Event Attendees Detail</p>
+                <div class="row">
+                    <div class="button event_btn_confirm">
+                        Confirm
+                    </div>
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </div>
+                <br/>
+                <br/>
+                <div class="body">
+                    <t t-foreach="widget.options" t-as="events">
+                        <div class="event">
+                            <div class="event-title">
+                                <strong><t t-esc="events.ticket_name" /></strong>
+                            </div>
+                            <t t-foreach="events.qty">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input class='form-control' type='text' required="This field is required" placeholder="Name" t-att-value="events.client_name" />
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input class='form-control' type='email' required="This field is required" placeholder="Email" t-att-value="events.client_email" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input class='form-control' type='tel' placeholder="Phone" t-att-value="events.client_phone" t-att-ticket_id="events.ticket_id" t-att-event_id="events.event_id" t-att-partner_id="events.partner_id" t-att-event_name="events.event_name" />
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </t>
+                </div>
+                
+            </div>
+        </div>
+    </t>
+    <!-- template use to render a Registration Badge -->
+    <t t-name="EventBadgePos">
+        <t t-foreach="events" t-as="event">
+        	<div style="page-break-before: always;"/>
+            <div class="pos-sale-ticket">
+                <div class="pos-center-align">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <t t-if="company_logo">
+                                <img t-att-src='company_logo' />
+                            </t>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="text-center">
+                                        <img t-att-src="url + '/report/barcode/?type=Code128&amp;value=' + event.barcode + '&amp;width=300&amp;height=67&amp;humanreadable=1'"></img>
+                                    </div>
+                                </div>
+                            </div>
+                            <h5><t t-esc="event.event_name"/></h5>
+                            <div class="col-xs-12 text-center" id="o_event_name">
+                                <small>
+                                    <h3><t t-esc="event.name"/></h3>
+                                </small>
+                            </div>
+                            <h4><t t-esc="event.ticket_name"/></h4>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </t>
+    </t>
+    <t t-name="XmlReceiptPOS">
+        <receipt align='center' width='40' value-thousands-separator=''>
+			<div style="page-break-before: always;"/>
+            <div>
+                <t t-if='company_logo'>
+                    <img t-att-src="company_logo"></img>
+                    <br/>
+                </t>
+                <br />
+                <br />
+                <t t-if='barcode_base64'>
+                    <img t-att-src="'data:image/png;base64,'+ barcode_base64"></img>
+                    <br/>
+                </t>
+                <br/>
+                <div font='b'>
+                    <t t-if='event.event_name'>
+                        <div>
+                            <t t-esc="event.event_name" />
+                        </div>
+                    </t>
+                </div>
+                <t t-if='event.name'>
+                    <div>
+                        <t t-esc="event.name" />
+                    </div>
+                </t>
+                <br/>
+                <t t-if='event.ticket_name'>
+                    <div>
+                        <b><t t-esc="event.ticket_name" /></b>
+                    </div>
+                </t>
+                <br/>
+            </div>
+            <br />
+            <br />
+        </receipt>
+    </t>
+</templates>

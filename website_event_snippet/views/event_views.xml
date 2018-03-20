@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_event_cover_image_form">
+        <field name="name">event.event.website.form</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="event.view_event_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="after">
+                <field name="cover_image" widget='image' class="oe_avatar" options='{"size": [90, 90]}'/>
+            </div>
+        </field>
+    </record>
+
+</odoo>

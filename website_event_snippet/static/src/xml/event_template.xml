@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <!-- Snippet's Body -->
+    <t t-name="website_event_snippet.media_list_template">
+        <t t-if="events.length == 0">
+            <t t-call="website_event_snippet.no_events"/>
+        </t>
+        <t t-else="">
+            <t t-foreach="events" t-as="event">
+                <div class="event media_list_template">
+                    <div class="top_cover_image">
+                        <t t-if="cover == 1">
+                            <t t-if="event.is_participating">
+                                <span class="notify-badge"><b>PARTICIPANT</b></span>
+                            </t>
+                            <t t-if="event.cover_image">
+                                <img width="265" height="185" t-attf-src="data:image/gif;base64, #{event.cover_image}"/>
+                            </t>
+                            <t t-else="">
+                                <img width="265" height="185" t-attf-src="/website_event_snippet/static/src/img/ticket.png" />
+                            </t>
+                        </t>
+                    </div>
+                    <div class="media-body">
+                        <t t-if="event.event_type_id">
+                            <b><span class="text-highlight"><t t-esc="event.event_type_id[1]"/></span>
+                                <t t-if="cover == 0 &amp;&amp; event.is_participating">
+                                    <span class="badge pull-right"> Participant </span>
+                                </t>
+                            </b>
+                        </t>
+                        <h4 class="media-heading"><t t-esc="event.name"/></h4>
+                        <div class="info_block">
+                            <div class="date_info">
+                                <i class="fa fa-fw fa-calendar-o"/>
+                                <b><t t-esc="event.date_begin"/> - <t t-esc="event.date_end"/></b>
+                            </div>
+                            <div class="location_info">
+                                <i class="fa fa-fw fa-map-marker"/>
+                                <b><t t-esc="event.city"/>, <t t-esc="event.country_id[1]"/></b>
+                            </div>
+                        </div>
+                        <div class="cut_line" />
+                        <center>
+                            <t t-if="event.seats_availability == 'limited' &amp;&amp; event.seats_available == 0">
+                                <div class="sold_out">SOLD OUT</div>
+                            </t>
+                            <t t-else="">
+                                <a class="btn btn-primary o_register_btn" t-att-href="event.website_url"><i class="fa fa-fw fa-ticket"/> REGISTER</a>
+                            </t>
+                        </center>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </t>
+
+    <!-- No Events here, template -->
+    <t t-name="website_event_snippet.no_events">
+        <div class="container readable">
+            <div class="alert alert-warning alert-dismissible text-center" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&#215;</span>
+                </button>
+                <h3>No Upcomming Events Here...</h3>
+            </div>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- used from POS UI, no need to be in print menu -->
+    <record id="report_event_registration_badge_pos" model="ir.actions.report.xml">
+        <field name="name">Registration Badge</field>
+        <field name="model">event.registration</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">event.event_registration_report_template_badge</field>
+    </record>
+
+</odoo>

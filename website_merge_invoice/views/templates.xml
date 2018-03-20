@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<template id="website_payment_invoice" inherit_id="website.assets_frontend">
+		<xpath expr="." position="inside">
+			<script type="text/javascript" src="/website_merge_invoice/static/src/js/website_payment_invoice.js"></script>
+		</xpath>
+	</template>
+	<template id="checkout_website_payment_invoice" inherit_id="website_sale.cart">
+		<xpath expr="//t[@t-call='website_sale.cart_lines']" position="after">
+			<div  class="form-group col-md-3 pull-right" id="div_to_create_invoice">
+                <div class="form-check text-right">
+				  <input class="form-check-input" type="checkbox" t-att-checked="website_sale_order and website_sale_order.to_create_invoice and 'checked'" id="is_create_invoice" name="is_create_invoice"/>
+				  <label class="form-check-label" for="to_create_invoice">Invoice?</label>
+				</div>
+            </div>
+		</xpath>
+	</template>
+	
+	<template id="website_payment_invoice_address" inherit_id="website_sale.address">
+		<xpath expr="//input[@name='field_required']" position="attributes">
+			<attribute name="t-att-value">(mode[1] == 'billing' and 'phone,name') or ''</attribute>
+		</xpath>
+	</template>
+	
+	
+	<template id="registration_attendee_details_inherit_inv" inherit_id="website_event.registration_attendee_details" name="Registration Attendee Details">
+		<xpath expr="//t[@t-foreach='tickets']" position="before">
+			<div class="form-group">
+                <div class="form-check">
+				  <input class="form-check-input" type="checkbox" t-att-checked="website_sale_order and website_sale_order.to_create_invoice and 'checked'" id="is_create_invoice" name="is_create_invoice"/>
+				  <label class="form-check-label" for="is_create_invoice">Invoice?</label>
+				</div>
+            </div>
+		</xpath>
+	</template>
+
+</odoo>
