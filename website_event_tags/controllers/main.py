@@ -66,5 +66,6 @@ class WebsiteEventControllerTag(WebsiteEventSaleController):
 
     @http.route(['/event/<model("event.event"):event>/registration/confirm'], type='http', auth="public", methods=['POST'], website=True)
     def registration_confirm(self, event, **post):
-        order = request.website.with_context(default_client_order_ref=event.name).sale_get_order(force_create=1)
+        order = request.website.sale_get_order(force_create=1)
+        order.client_order_ref = event.name
         return super(WebsiteEventControllerTag, self).registration_confirm(event, **post)
