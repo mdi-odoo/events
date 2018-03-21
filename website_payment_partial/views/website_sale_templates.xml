@@ -17,7 +17,7 @@
 								<label><input type="radio" name="payment_option" value="0"/><span> Pay All </span></label>
 							</li>
 							<li>
-								<label><input type="radio" name="payment_option" value="1"/><span> Pay Advance Payment Payment (<t t-esc="payment_amount" t-options='{"widget": "monetary", "display_currency": website.currency_id}'/>)</span></label>
+								<label><input type="radio" name="payment_option" value="1"/><span> Pay Advance Payment (<t t-esc="payment_amount" t-options='{"widget": "monetary", "display_currency": website.currency_id}'/>)</span></label>
 							</li>
 						</ul>
 					</div>
