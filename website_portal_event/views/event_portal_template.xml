@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data noupdate="0">
+
+    <template id="portal_my_home_menu_event" name="Portal layout : event tickets menu entries" inherit_id="website_portal.portal_layout" priority="25">
+        <xpath expr="//ul[contains(@class,'o_portal_submenu')]" position="inside">
+            <li>
+                <a href="/my/event-tickets">Event Tickets</a>
+            </li>
+        </xpath>
+    </template>
+
+    <template id="portal_my_home_event_ticket" name="Portal My Home : Event Ticket" inherit_id="website_portal.portal_my_home">
+        <xpath expr="//div[contains(@class,'o_my_home_content')]" position="inside">
+            <h3 class="page-header">
+                <a href="/my/event-tickets">Your Event Tickets
+                    <small class="ml8">
+                        <t t-if="event_tickets">
+                            <span class='badge'><t t-esc="event_tickets"/></span>
+                        </t>
+                        <t t-if="not event_tickets">
+                            There are currently no event tickets for your account.
+                        </t>
+                    </small>
+                </a>
+            </h3>
+        </xpath>
+    </template>
+
+    <template id="portal_event_ticket" name="Event Tickets">
+        <t t-call="website_portal.portal_layout">
+            <div class="row event_ticket_badge">
+                <h3 class="page-header">
+                    Your Event Tickets
+                </h3>
+                <div class="page_header">
+                    <!-- Print Button -->
+                    <div class="mr8 pull-left">
+                        <a id="prints" class="prints btn btn-default hidden" href="/my/event-tickets/pdf/tickets">Print All</a>
+                    </div>
+                    <!-- Pager -->
+                    <div class="col-sm-4 pull-right event_tickets_pager">
+                        <t t-call="website.pager" />
+                    </div>
+                    <div class="mr8 pull-right">
+                        <a id="clear" class="clear_search btn btn-default hidden" href="/my/event-tickets">Clear</a>
+                    </div>
+                    <!-- Search box -->
+                    <div class="col-sm-4 pull-right">
+                        <form method="get" t-att-class="search_class">
+                            <div class="input-group">
+                                <div class="oe_search">
+                                    <input id="seacrh_box" type="text" name="search" class="search-query form-control oe_search_box" placeholder="Search..." t-att-value="search" />
+                                </div>
+                                <span class="input-group-btn">
+                                   <button type="submit" class="btn btn-default oe_search_button"><i class="fa fa-search"/></button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <t t-if="not registrations">
+                <p>There are currently no event tickets for your account.</p>
+            </t>
+            <t t-if="registrations">
+                <table class="table table-hover status_table table_checkbox_ticket">
+                    <thead>
+                        <tr class="active">
+                            <th class="o_list_record_selector" width="1">
+                                <div class="o_checkbox">
+                                    <input type="checkbox" class="main_checkbox_tickets"/><span/>
+                                </div>
+                            </th>
+                            <th>Event Date</th>
+                            <th>Attendee Name</th>
+                            <th>Event</th>
+                            <th>Event Type</th>
+                            <th>Print</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="registrations" t-as="ticket">
+                            <th class="o_list_record_selector" width="1">
+                                <div class="o_checkbox">
+                                    <input t-att-data-ticket_id="ticket.id" type="checkbox" class="checkbox_ticket" t-att-name="'checkbox'+ticket.name"/><span/>
+                                </div>
+                            </th>
+                            <td><span t-field="ticket.event_id.date_begin"/></td>
+                            <td><span t-field="ticket.name"/></td>
+                            <td><a  t-attf-href="/event/#{ slug(ticket.event_id) }/#{(not ticket.event_id.menu_id) and 'register' or ''}"><span t-field="ticket.event_id.name"/></a></td>
+                            <td><span t-field="ticket.event_ticket_id.name"/></td>
+                            <td>
+                                <a t-att-href="'/my/event-tickets/pdf/'+str(ticket.id)"  t-att-title="ticket.event_id.name" class="fa fa-print"></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </t>
+        </t>
+    </template>
+</data>
+</odoo>

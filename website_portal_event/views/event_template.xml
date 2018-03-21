@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<odoo>
+	<template id="assets_frontend" inherit_id="website.assets_frontend" name="Contract Manager">
+		<xpath expr="." position="inside">
+			<link rel="stylesheet" href="/website_portal_event/static/src/less/event.less"/>
+			<script type="text/javascript" src="/website_portal_event/static/src/js/event.js"></script>
+		</xpath>
+	</template>
+	
+	<template id="my_event_tickets_link" name="Link to Tickets portal" inherit_id="website.layout">
+        <xpath expr="//li[@id='o_logout']" position="before">
+            <li><a href="/my/event-tickets" role="menuitem">My Tickets</a></li>
+        </xpath>
+    </template>
+    
+</odoo>

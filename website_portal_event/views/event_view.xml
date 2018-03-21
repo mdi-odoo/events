@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="event_form_inherit_add_badge_fields" model="ir.ui.view">
+            <field name="name">event.event.form</field>
+            <field name="model">event.event</field>
+            <field name="inherit_id" ref="event.view_event_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                	<page string="Badge Design">
+                		<group>
+                			<field name="badge_front"/>
+                		</group>
+                		<group>
+                			<field name="badge_back"/>
+                		</group>
+                		<group>
+                			<field name="badge_innerleft"/>
+                		</group>
+                		<group>
+                			<field name="badge_innerright"/>
+                		</group>
+                	</page>
+                </xpath>
+            </field>
+        </record>
+</data>
+</odoo>
