@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<record id="view_event_form_website_payment_partial" model="ir.ui.view">
+	    <field name="name">view.event.form.website_payment_partial</field>
+	    <field name="model">event.event</field>
+	    <field name="inherit_id" ref="event.view_event_form"/>
+	    <field name="arch" type="xml">
+	    	<xpath expr="//field[@name='date_tz']" position="after">
+	    		<field name="payment_term_id"/>
+	    	</xpath>
+	    </field>
+	</record>
+</odoo>

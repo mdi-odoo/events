@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<template id="website_payment_partial_assets" inherit_id="website.assets_frontend">
+		<xpath expr="." position="inside">
+			<script type="text/javascript" src="/website_payment_partial/static/src/js/website_payment_partial.js"></script>
+		</xpath>
+	</template>
+	<template id="website_sale_payment_inherit_website_payment_partial" inherit_id="website_sale.payment">
+		<xpath expr="//div[@t-if='acquirers and website_sale_order.amount_total']" position="before">
+			<div id="partial_payment_block" t-attf-data-adv_payment="#{'1' if website_sale_order.advance_payment else '0'}" t-att-data-order_id="website_sale_order.id" t-if="website_sale_order.get_event_payment_term()">
+				<t t-set="payment_amount" t-value="website_sale_order.get_advance_payment_amount(website_sale_order.get_event_payment_term())"/>
+				<h4 class="mb16">Payment Options</h4>
+				<div class="row">
+					<div class="col-md-6">
+						<ul class="list-unstyled">
+							<li>
+								<label><input type="radio" name="payment_option" value="0"/><span> Pay All </span></label>
+							</li>
+							<li>
+								<label><input type="radio" name="payment_option" value="1"/><span> Pay Advance Payment Payment (<t t-esc="payment_amount" t-options='{"widget": "monetary", "display_currency": website.currency_id}'/>)</span></label>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</xpath>
+	</template>
+</odoo>
