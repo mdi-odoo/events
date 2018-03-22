@@ -25,4 +25,11 @@
 			</div>
 		</xpath>
 	</template>
+
+    <template id="website_sale_payment_confirm_inherit" inherit_id="website_sale.confirmation">
+        <xpath expr="//table[last()]//strong[@t-field='order.amount_total']" position="replace">
+        <strong t-field="order.payment_tx_id.amount" t-options="{'widget': 'monetary', 'display_currency': order.pricelist_id.currency_id}" />
+        </xpath>
+    </template>
+
 </odoo>
