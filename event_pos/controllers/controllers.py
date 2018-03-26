@@ -29,7 +29,7 @@ class EventPos(http.Controller):
 
 
     @http.route(['/pos/get_event_logo'], type='json', auth="user")
-    def get_as_base64(self, **post):
+    def get_organizer_logo(self, **post):
         event = request.env['event.event'].browse(int(post.get('event')))
         if event.organizer_id:
             return event.organizer_id.image#company_id.logo_web
