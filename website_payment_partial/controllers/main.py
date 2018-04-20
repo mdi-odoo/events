@@ -68,6 +68,9 @@ class WebsiteSale(WebsiteSale):
             'payment_acquirer_id': acquirer_id,
             'payment_tx_id': request.session['sale_transaction_id']
         })
+        if order.advance_payment:
+            order.payment_term_id = order.get_event_payment_term()
+
         if token:
             return request.env.ref('website_sale.payment_token_form').render(dict(tx=tx), engine='ir.qweb')
 
@@ -141,4 +144,3 @@ class WebsiteSale(WebsiteSale):
     def change_payment_option(self, order_id, advance_payment):
     	order = request.env['sale.order'].sudo().browse(int(order_id))
     	order.advance_payment = bool(advance_payment)
-    	print ":---------------:->", order.advance_payment, advance_payment

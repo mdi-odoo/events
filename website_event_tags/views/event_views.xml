@@ -28,7 +28,7 @@
         </field>
     </record>
 
-    <menuitem name="Event Tags" id="menu_event_ticket_tag" action="event_tag_action" parent="event.menu_event_configuration" groups="base.group_no_one" sequence="10"/>
+    <menuitem name="Event Tags" id="menu_event_ticket_tag1" action="event_tag_action" parent="event.menu_event_configuration"  sequence="10"/>
 
 
     <record id="view_event_form_inherit_ticket_tag" model="ir.ui.view">

@@ -24,6 +24,12 @@
                     </t>
                 </t>
             </ol>
+            <br/>
+           <ul name="Event Tag Menu" class="nav navbar-nav mb0" id="event_tag_menu" t-if="event and event.is_tags_enable and event.event_ticket_ids.mapped('tag_ids')">
+                <t t-foreach="event.event_ticket_ids.mapped('tag_ids')" t-as="tg">
+                    <li t-att-class="'active' if tg.id == int(request.params.get('tag', 0)) else ''"><a t-attf-href="/event/#{slug(event)}/tags/#{slug(tg)}"><span t-esc="tg.name"/></a></li>
+                </t>
+            </ul>
         </xpath>
     </template>
 

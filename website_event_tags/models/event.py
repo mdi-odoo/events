@@ -25,7 +25,7 @@ class EventTicketTag(models.Model):
 
     name = fields.Char(required=True)
     html_content = fields.Html('Content', default=_default_content, translate=html_translate, sanitize=False)
-    description = fields.Text('Description', translate=True, default="Tag Description")
+    description = fields.Text('Description', translate=True, default="")
 
 
 class EventTicket(models.Model):

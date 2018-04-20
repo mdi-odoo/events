@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-extend="website_event_snippet.media_list_template">
+        <t t-jquery=".o_register_btn" t-operation="replace"/>
+            <a class="btn btn-primary o_register_btn" t-attf-href="event.website_url#{event.is_tags_enable ? '/tags'}"><i class="fa fa-fw fa-ticket"/> REGISTER</a>
+        </t>
+    </t>
+
+</templates>

@@ -3,6 +3,7 @@
     <data>
         <template id="assets_frontend_js" name="Events JS frontend assets" inherit_id="website.assets_frontend">
             <xpath expr="//script[last()]" position="after">
+                <link href="/website_event_tags/static/src/less/events_tag.less" rel="stylesheet" type="text/less"/>
                 <script src="/website_event_tags/static/src/js/s_events_frontend.js" rel="stylesheet" type="text/less"/>
             </xpath>
         </template>
@@ -37,33 +38,34 @@
 
         <template id="event_tag">
         	<div class="col-md-12">
-                <div class="col-md-8">
-                    <span t-field="tag.html_content" />
-                </div>
-                <div class="col-md-4 css_noprint">
-                    <div class="clearfix"/>
-                    <a class="btn btn-primary mb8" t-attf-href="/event/#{slug(event)}/register?tag=#{tag.id}">Registration</a>
-                    <div class="panel panel-default" t-if="event.address_id">
-                        <div class="panel-heading">
-                            <h4>Where</h4>
-                        </div>
-                        <div class="panel-body">
-                            <t t-if="event.google_map_img()">
-                                <a t-att-href="event.google_map_link()" target="_BLANK">
-                                   <img t-att-src="event.google_map_img()" width="100%%"/>
-                                </a>
-                            </t>
-                            <t t-else="1">
-                                <a t-att-href="event.google_map_link()" target="_BLANK">Visualize on Google Maps</a>
-                            </t>
-                            <div itemprop="location" class="mt16 mb8" t-field="event.address_id" t-options='{
-                                "widget": "contact",
-                                "fields": ["name", "address", "phone", "mobile", "fax", "email"]
-                                }'/>
-                        </div>
-                    </div>
+        		<div class="row">
+	                <div class="col-md-8">
+	                    <span t-field="tag.html_content" />
+	                </div>
+	                <div class="col-md-4 css_noprint">
+	                    <div class="clearfix"/>
+	                    <a class="btn btn-primary mb8" t-attf-href="/event/#{slug(event)}/register?tag=#{tag.id}">Registration</a>
+	                    <div class="panel panel-default" t-if="event.address_id">
+	                        <div class="panel-heading">
+	                            <h4>Where</h4>
+	                        </div>
+	                        <div class="panel-body">
+	                            <t t-if="event.google_map_img()">
+	                                <a t-att-href="event.google_map_link()" target="_BLANK">
+	                                   <img t-att-src="event.google_map_img()" width="100%%"/>
+	                                </a>
+	                            </t>
+	                            <t t-else="1">
+	                                <a t-att-href="event.google_map_link()" target="_BLANK">Visualize on Google Maps</a>
+	                            </t>
+	                            <div itemprop="location" class="mt16 mb8" t-field="event.address_id" t-options='{
+	                                "widget": "contact",
+	                                "fields": ["name", "address", "phone", "mobile", "fax", "email"]
+	                                }'/>
+	                        </div>
+	                    </div>
 
-                    <div class="panel panel-default">
+                    <div class="panel panel-default panel-address">
                         <div class="panel-heading">
                             <h4>When</h4>
                         </div>
@@ -73,7 +75,7 @@
                         </div>
                     </div>
 
-                    <div class="panel panel-default" t-if="event.organizer_id">
+                    <div class="panel panel-default panel-organizer" t-if="event.organizer_id">
                         <div class="panel-heading">
                             <h4>Organizer</h4>
                         </div>
@@ -83,7 +85,7 @@
                             }'/>
                     </div>
 
-                    <div class="panel panel-default">
+                    <div class="panel panel-default panel-social">
                         <div class="panel-heading">
                             <h4>Social Stream</h4>
                         </div>
@@ -117,20 +119,46 @@
                         <meta name="twitter:description" t-att-content="event.date_begin" />
                     </t>
                 </div>
+                </div>
             </div>
         </template>
         
         <template id="event_tags_description">
             <t t-call="website.layout">
-                <div id="wrap" class="js_event">
+                <div id="wrap" class="js_event o_website_event">
                     <div class="container">
                         <div class="row mt8">
                             <div class="col-sm-7" id="event_menu">
+                                <ol class="breadcrumb mb0" t-if="not event.menu_id">
+                                    <li><a href="/event">All Events</a></li>
+                                    <li t-if="event.event_type_id">
+                                        <a t-attf-href="/event?type=#{event.event_type_id.id}" t-esc="event.event_type_id.name"/>
+                                    </li>
+                                    <li t-if="event.country_id">
+                                        <a t-attf-href="/event?country=#{event.country_id.id}" t-esc="event.country_id.name"/>
+                                    </li>
+                                    <li class="active">
+                                        <span t-field="event.name"/>
+                                    </li>
+                                </ol>
                                 <ol name="Event Menu" class="breadcrumb mb0" id="event_menu" t-if="event.menu_id" t-att-data-content_menu_id="editable and event.menu_id.id">
                                     <t t-foreach="event.menu_id.child_id" t-as="submenu">
-                                        <t t-call="website.submenu"/>
+                                        <t t-if="event.is_tags_enable">
+                                            <t t-if="submenu.name != 'Register'">
+                                                <t t-call="website.submenu" />
+                                            </t>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-call="website.submenu" />
+                                        </t>
                                     </t>
                                 </ol>
+                                <br/>
+                                <ul name="Event Tag Menu" class="nav navbar-nav mb0" id="event_tag_menu" t-if="event and event.is_tags_enable and event.event_ticket_ids.mapped('tag_ids')">
+                                    <t t-foreach="event.event_ticket_ids.mapped('tag_ids')" t-as="tg">
+                                        <li t-att-class="'active' if tg.id == tag.id else ''"><a t-attf-href="/event/#{slug(event)}/tags/#{slug(tg)}"><span t-esc="tg.name"/></a></li>
+                                    </t>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -159,7 +187,7 @@
         </template>
         
         <!--  Overwrite Intorduction template and call tags temaplte if enable -->
-        <template id="website_event.template_intro">
+        <!-- <template id="website_event.template_intro">
 	         <t t-call="website_event.layout">
 		        <section class="container">
 		            <h1 class="text-center">Event Introduction</h1>
@@ -171,7 +199,7 @@
 		        </section>
                 <div class="oe_structure oe_empty"/>
     		</t>
-    	</template>
+    	</template> -->
 
         <!-- Registration Templates -->
         <template id="tag_registration_template">
@@ -338,4 +366,3 @@
 
     </data>
 </odoo>
-
