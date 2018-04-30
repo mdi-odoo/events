@@ -9,6 +9,7 @@
         <field name="arch" type="xml">
             <tree editable="top" string="Tag">
                 <field name="name"/>
+                <field name="event_ticket_id"/>
                 <field name="description"/>
             </tree>
         </field>
@@ -38,8 +39,11 @@
         <field name="arch" type="xml">
             <data>
                 <xpath expr="//field[@name='event_ticket_ids']/tree/field[@name='product_id']" position="after">
-                    <field name="tag_ids" widget="many2many_tags"/>
+                    <field name="tag_ids" domain="[('event_ticket_id','=',False)]"  widget="many2many_tags"/>
                     <field name="color"/>
+                </xpath>
+                <xpath expr="//field[@name='event_ticket_ids']/tree/field[@name='price']" position="after">
+                    <field name="default_tkt_count"/>
                 </xpath>
             </data>
         </field>
