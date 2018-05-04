@@ -53,7 +53,7 @@
         </xpath>
         <xpath expr="//button[@type='submit']" position="replace">
             <t t-if="not request.env.user.has_group('base.group_public')">
-                    <t t-if="website.sale_get_order().is_uniq_event(event) == True">
+                    <t t-if="website.sale_get_order() and website.sale_get_order().is_uniq_event(event) == True">
                         <button type="submit" t-if="event.state == 'confirm' and (event.seats_available or event.seats_availability == 'unlimited')" class="btn btn-primary btn-lg pull-right a-submit" t-attf-id="#{event.id}">Order Now</button>
                     </t>
                     <t t-else="">
@@ -98,7 +98,7 @@
                                     <center>
                                         <a class="btn btn-lg btn-primary" t-attf-href="/web/login?redirect=#{request.httprequest.url}">Creat an Account</a>
                                          Or 
-                                        <t t-if="website.sale_get_order().is_uniq_event(event) == True">
+                                        <t t-if="website.sale_get_order() and website.sale_get_order().is_uniq_event(event) == True">
                                             <button type="submit" t-if="event.state == 'confirm' and (event.seats_available or event.seats_availability == 'unlimited')" class="btn btn-primary btn-lg a-submit" t-attf-id="#{event.id}">Without Login</button>
                                         </t>
                                         <t t-else="">
