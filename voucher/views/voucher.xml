@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="voucher_form" model="ir.ui.view">
+        <field name="name">Voucher</field>
+        <field name="model">voucher</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="stage" widget="statusbar" clickable="True"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="create_date" widget="date" readonly="1"/>
+                            <field name="date_validity_from"/>
+                            <field name="date_validity_to"/>
+                        </group>
+                        <group>
+                            <field name="voucher_type"/>
+                            <field name="voucher_value"/>
+                            <field name="recipient_id"/>
+                            <field name="partner_tag_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="endorsable"/>
+                            <field name="is_template"/>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Events">
+                                <field name="event_ids"/>
+                            </page>
+                            <page string="Partner who user this voucher">
+                                <field name="consumed_partner_ids"/>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="voucher_tree" model="ir.ui.view">
+        <field name="name">Voucher</field>
+        <field name="model">voucher</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="date_validity_from"/>
+                <field name="date_validity_to"/>
+                <field name="voucher_type"/>
+                <field name="recipient_id"/>
+                <field name="endorsable"/>
+                <field name="is_template"/>
+                <field name="event_ids" widget="many2many_tags"/>
+                <field name="partner_tag_ids" widget="many2many_tags"/>
+                <field name="stage"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--room action-->
+    <record model="ir.actions.act_window" id="voucher_action">
+        <field name="name">Voucher</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">voucher</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="voucher_menu"
+              name="Voucher"
+              parent="sales_team.menu_sales"
+              sequence="20"
+              action="voucher_action"/>
+
+</odoo>

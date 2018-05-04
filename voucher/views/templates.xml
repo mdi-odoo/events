@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="voucher_frontend_assets" inherit_id="website.assets_frontend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/voucher/static/src/js/voucher.js"></script>
+        </xpath>
+    </template>
+    <template id="website_sale_payment_inherit_voucher" inherit_id="website_sale.payment">
+    	<xpath expr="//t[@t-call='website_sale.bill_to']/.." position="after">
+    		<div class="col-lg-3 col-lg-offset-1 col-sm-3 text-muted">
+    			<div class="panel panel-info">
+    				<div class="panel-heading">
+    					Apply Voucher Code
+    				</div>
+	    			<div class="panel-body">
+			            <form t-if="website_sale_order and website_sale_order.website_order_line" action="/shop/payment/apply_voucher" method="post" class="mb32">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                            <div class="input-group">
+                                <input name="voucher" class="form-control" type="text" placeholder="code..."/>
+                                <div class="input-group-btn">
+                                    <a class="btn btn-default" id='apply_voucher'>Apply</a>
+                                </div>
+                            </div>
+                        </form>
+			    		<div class="text-danger error_msg">
+			    		</div>
+	    			</div>
+    			</div>
+            </div>
+    	</xpath>
+    </template>
+</odoo>
