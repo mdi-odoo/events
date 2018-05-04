@@ -6,7 +6,7 @@ var all_models = models.PosModel.prototype.models;
 
 models.load_models({
         model: 'pos.config',
-        fields: ['name', 'x_event_id'],
+        fields: ['name', 'x_event_id', 'default_partner_id'],
         ids: function(self){ return [self.pos_session.config_id[0]]; },
         loaded: function(self, current_pos_id){
             for(var i=0; i < all_models.length ; i++){
@@ -61,4 +61,19 @@ models.load_models({
     },{
         'before': 'product.product'
     });
+
+//Purpose of extending this order widget is to set the default partner on every new order
+var _super_posmodel = models.PosModel.prototype;
+models.PosModel = models.PosModel.extend({
+    add_new_order: function() {
+        var res = _super_posmodel.add_new_order.apply(this,arguments);
+        if (this.config.default_partner_id) {
+            var client = this.db.get_partner_by_id(this.config.default_partner_id[0]);
+            if (client) {
+                this.get_order().set_client(client);
+            }
+        }
+    }
+});
+
 });

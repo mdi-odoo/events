@@ -20,6 +20,7 @@ odoo.define('event_pos.screens', function(require) {
                 if (this.pos.config.x_event_id) {
                     if (session.attendeeDetails) {
                         var self = this;
+                        $.blockUI()
                         ajax.jsonRpc('/pos/resigter_attendees', 'call', {
                             attendees: session.attendeeDetails,
                             order_ref: this.pos.get_order().name,
@@ -32,6 +33,14 @@ odoo.define('event_pos.screens', function(require) {
 //                            });
                         }).done(function() {
                             self.finalize_validation();
+                            $.unblockUI()
+                        }).fail(function(error) {
+                        	$.unblockUI()
+                        	var msg = arguments && arguments[1] && arguments[1].data && arguments[1].data.message;
+                            self.gui.show_popup('error', {
+                                'title': _t('No Ticket'),
+                                'body': msg,
+                            });
                         });
                     } else {
                         this.gui.show_popup('error', {
@@ -149,7 +158,7 @@ odoo.define('event_pos.screens', function(require) {
                                 ]
                             ], { limit: 1 }).then(function(ticket) {
                                 ticket = ticket[0];
-                                if (ticket.seats_availability == "limited" && ticket.seats_available == 0) {
+                                if (ticket.seats_availability == "limited" && ticket.seats_available < orderline.quantity) {
                                     event_valid = false;
                                 } else {
                                     if (client) {
@@ -241,18 +250,18 @@ odoo.define('event_pos.screens', function(require) {
                         company_logo:event_logo,
                     }));
             
-                    _.each(bookingDetails, function(event) {
-                        ajax.jsonRpc('/pos/get_as_base64', 'call', {barcode:event.barcode}).then(function(image_base64) {
-                            var newEvent = {
-                                event: event,
-                                widget: self,
-                                barcode_base64:image_base64,
-                                company_logo:event_logo,
-                            };
-                            var receipt = QWeb.render('XmlReceiptPOS',newEvent);
-                            self.pos.proxy.print_receipt(receipt);
-                        });
-                    });
+//                    _.each(bookingDetails, function(event) {
+//                        ajax.jsonRpc('/pos/get_as_base64', 'call', {barcode:event.barcode}).then(function(image_base64) {
+//                            var newEvent = {
+//                                event: event,
+//                                widget: self,
+//                                barcode_base64:image_base64,
+//                                company_logo:event_logo,
+//                            };
+//                            var receipt = QWeb.render('XmlReceiptPOS',newEvent);
+//                            self.pos.proxy.print_receipt(receipt);
+//                        });
+//                    });
                 });
             }
         },

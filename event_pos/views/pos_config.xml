@@ -15,6 +15,9 @@
                         <field name="x_event_id"/>
                     </div>
                 </xpath>
+                <field name="default_fiscal_position_id" position="after">
+                    <field name="default_partner_id"/>
+                </field>
             </field>
         </record>
     </data>
