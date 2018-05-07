@@ -27,7 +27,8 @@ class EventTicketTag(models.Model):
     html_content = fields.Html('Content', default=_default_content, translate=html_translate, sanitize=False)
     description = fields.Text('Description', translate=True, default="")
     event_ticket_id = fields.Many2one('event.event.ticket', string="Ticket Type")
-
+    event_id = fields.Many2one('event.event', related = 'event_ticket_id.event_id', store=True)
+    
 class EventTicket(models.Model):
 
     _inherit = 'event.event.ticket'
@@ -35,7 +36,6 @@ class EventTicket(models.Model):
     tag_ids = fields.Many2many('event.ticket.tag', string='Tags')
     color = fields.Char(help="Color of the Ticket eg. 'yellow' or '#ff0505'", default='grey')
     default_tkt_count = fields.Integer('Default Quantity')
-    
     
     @api.model
     def create(self,vals):

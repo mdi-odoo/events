@@ -39,7 +39,7 @@
         <field name="arch" type="xml">
             <data>
                 <xpath expr="//field[@name='event_ticket_ids']/tree/field[@name='product_id']" position="after">
-                    <field name="tag_ids" domain="[('event_ticket_id','=',False)]"  widget="many2many_tags"/>
+                    <field name="tag_ids" domain="['|',('event_ticket_id','=',False),('event_ticket_id.event_id','=',parent.id)]"  widget="many2many_tags"/>
                     <field name="color"/>
                 </xpath>
                 <xpath expr="//field[@name='event_ticket_ids']/tree/field[@name='price']" position="after">
